@@ -1,0 +1,274 @@
+/* css Zen Garden submission 085 - 'Oceans Apart', by Ryan Sims, http://www.justwatchthesky.com */
+/* css released under Creative Commons License - http://creativecommons.org/licenses/by-nc-sa/1.0/  */
+/* All associated graphics copyright 2004, Ryan Sims */
+/* Added: March 4th, 2004 */
+
+/* IMPORTANT */
+/* This design is not a template. You may not reproduce it elsewhere without the 
+   designer's written permission. However, feel free to study the CSS and use 
+   techniques you learn from it elsewhere. */
+
+
+/* Basic Elements */
+
+body { 
+  font: 11px trebuchet ms, arial, helvetica, sans-serif; 
+  color: #9F927F; 
+  background: #E8E0D5 repeat-y center; 
+  margin: 10px; 
+  line-height: 150%;
+}
+
+p { 
+  font: 11px trebuchet ms, arial, helvetica, sans-serif; 
+  margin-top: 0px; 
+  text-align: left;
+}
+
+p:nth-child(6) { 
+  font-size: 9px;
+  padding-top: 15px;
+}
+
+a:link { 
+  background: #EBEEF2;
+  padding: 0 2px 0 2px;
+  text-decoration: none; 
+  color: #4F6B8B;
+}
+
+a:visited { 
+  background: #EBEEF2;
+  padding: 0 2px 0 2px;
+  text-decoration: none; 
+  color: #4F6B8B;
+}
+
+a:hover, a:active { 
+  background: #F1EFE9;
+  padding: 0 2px 0 2px;
+  text-decoration: none; 
+  color: #384A5F;
+}
+
+h1, h2 {display:none}
+h3 {
+  margin: 0;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden; 
+}
+
+
+/* specific divs */
+
+.page-wrapper { 
+  display: block;
+  position: relative;
+  border: 11px #B9AA94 solid;
+  margin: 0px;
+  margin-left:auto;
+  margin-right:auto;
+  width: 527px;
+  voice-family: "\"}\""; 
+  voice-family:inherit;
+  width: 505px;
+}
+
+.summary {
+  position: relative;
+  left: 199px;
+  padding: 14px 14px 0 14px;
+}
+.summary p:first-child { display: none }
+.summary p:last-child { 
+  font-size: 9px;
+}
+
+.preamble, .supporting {
+  position: relative;
+  left: 199px;
+  width: 306px;
+  text-align: left;
+  padding: 0 14px 0 14px;
+  margin-bottom: 10px;
+  voice-family: "\"}\""; 
+  voice-family:inherit;
+  width: 278px;
+}
+
+footer { 
+  text-align: left; 
+  padding-top: 15px;
+}
+footer a:link, footer a:visited { 
+  font-size: 9px;
+  margin-right: 15px;
+}
+
+.sidebar {
+  position: absolute; 
+  top: 407px; 
+}
+
+.sidebar .wrapper { 
+  font: 9px trebuchet ms, arial, helvetica, sans-serif; 
+  color: #9F927F;
+  width: 188px; 
+}
+
+.sidebar h3 { 
+  margin: 0; 
+  width: 188px; 
+  height: 42px; 
+}
+.sidebar h3.select {
+  background: transparent top left no-repeat; 
+}
+.sidebar h3.archives {
+  background: transparent top left no-repeat;
+}
+.sidebar h3.resources {
+  background: transparent top left no-repeat;
+}
+
+.sidebar ul {
+  margin: 0px;
+  padding: 0px;
+}
+.sidebar li {
+  height: 48px; 
+  list-style-type: none;
+  background: transparent repeat-x top left; 
+  display: block; 
+  padding-left: 14px;
+}
+.sidebar li a { 
+  display: block;
+  width: auto;
+  color: #4F6B8B;
+  padding: 9px 0 0 0;
+  background: none;
+  color: #384A5F;
+  font-size: 11px;
+}
+.sidebar li a:hover { 
+  color: #746E50;
+}
+.sidebar li a.designer-name:link, .sidebar li a.designer-name:visited {
+  color: #929B70;
+  font-weight: normal;
+  display: inline;
+  font-size: 9px;
+  padding: 0;
+}
+.sidebar li a.designer-name:hover {
+  color: #746E50;
+}
+
+.sidebar .design-archives li, .sidebar .zen-resources li {
+  height: 25px;
+  background: #F3F1EC;
+  list-style-type: none; 
+  display: block; 
+  padding-left: 14px;
+  border-bottom: 1px #DFDCD1 solid;
+}
+.sidebar .design-archives li a, .sidebar .zen-resources li a {
+  padding-top: 5px;
+  padding-bottom: 3px;
+}
+
+  
+/* header graphics */
+
+.preamble { 
+  background:transparent no-repeat top left;
+  padding-top:30px;
+}
+
+.explanation { 
+  background:transparent no-repeat top left;
+  padding-top:30px;
+}
+
+.participation { 
+  background:transparent no-repeat top left;
+  padding-top:30px;
+}
+
+.benefits { 
+  background:transparent no-repeat top left;
+  padding-top:30px;
+}
+
+.requirements { 
+  background:transparent no-repeat top left;
+  padding-top:30px;
+}
+
+.button {
+  -moz-box-shadow:inset 0px 1px 0px 0px #a6827e;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #a6827e;
+  box-shadow:inset 0px 1px 0px 0px #a6827e;
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c78748), color-stop(1, #634b30));
+  background:-moz-linear-gradient(top, #c78748 5%, #634b30 100%);
+  background:-webkit-linear-gradient(top, #c78748 5%, #634b30 100%);
+  background:-o-linear-gradient(top, #c78748 5%, #634b30 100%);
+  background:-ms-linear-gradient(top, #c78748 5%, #634b30 100%);
+  background:linear-gradient(to bottom, #c78748 5%, #634b30 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c78748', endColorstr='#634b30',GradientType=0);
+  background-color:#c78748;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  border-radius:3px;
+  border:1px solid #54381e;
+  display:inline-block;
+  cursor:pointer;
+  color:#FFDBA7;
+  font-family:Arial;
+  font-size:12px;
+  padding:3px 9px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #4d3534;
+}
+
+.button:enabled:hover {
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #634b30), color-stop(1, #c78748));
+  background:-moz-linear-gradient(top, #634b30 5%, #c78748 100%);
+  background:-webkit-linear-gradient(top, #634b30 5%, #c78748 100%);
+  background:-o-linear-gradient(top, #634b30 5%, #c78748 100%);
+  background:-ms-linear-gradient(top, #634b30 5%, #c78748 100%);
+  background:linear-gradient(to bottom, #634b30 5%, #c78748 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#634b30', endColorstr='#c78748',GradientType=0);
+  background-color:#634b30;
+}
+
+.button:active {
+  position:relative;
+  top:1px;
+}
+
+.button:disabled {
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #81766C), color-stop(1, #A99E93));
+  background:-moz-linear-gradient(top, #81766C 5%, #A99E93 100%);
+  background:-webkit-linear-gradient(top, #81766C 5%, #A99E93 100%);
+  background:-o-linear-gradient(top, #81766C 5%, #A99E93 100%);
+  background:-ms-linear-gradient(top, #81766C 5%, #A99E93 100%);
+  background:linear-gradient(to bottom, #81766C 5%, #A99E93 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#81766C', endColorstr='#A99E93',GradientType=0);
+  border:1px solid #3C2F23;
+  color:#D7CEC4;
+}
+
+#container {
+  width: 600px;
+  margin-left: 10px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+
+/* extra divs */
+
+.extra1, .extra2, .extra3, .extra4, .extra5, .extra6 {display:none}

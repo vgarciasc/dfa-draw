@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<title>Autonoma Simulator</title>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script type="text/javascript" src="../js/maincanvas.js"></script>
+	<script type="text/javascript" src="../js/actions.js"></script>
+	<script type="text/javascript" src="../js/transition.js"></script>
+	<script type="text/javascript" src="../js/input.js"></script>
+	<script type="text/javascript" src="../js/engine.js"></script>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/importexport.js"></script>
+	<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+	<input type="text" id="alphabet"> <input type="submit" class="button" value="set alphabet" onclick="setAlphabet()"><br>
+	<input type="text" id="input-word"> <input type="submit" class="button" value="run" onclick="run()"><br>
+	<input type="text" id="json-area">
+	<input type="submit" class="button" value="Download JSON" onclick="exportJson()">
+	<input type="submit" class="button" value="Upload JSON" onclick="importJson()"><br>
+	<canvas id="main-canvas" width="400" height="400"></canvas>
+	<div id="results">
+	<b>results:</b><br>
+	</div>
+	<br>
+</body>
+</html>
