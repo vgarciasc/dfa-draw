@@ -10,9 +10,14 @@ window.onload = function() {
 	start();
 	setInterval(draw, 
 		1000/fps);
+	setInterval(validateInput,
+		1000/fps);
 };
 
 function start() {
+	transitionList = [];
+	stateList = [];
+
 	canvas = document.getElementById("main-canvas");
 	context = canvas.getContext("2d");
 
@@ -20,6 +25,10 @@ function start() {
 	canvas.addEventListener("mouseup", onMouseUp, false);
 	canvas.addEventListener("mousemove", onMouseMove, false);
 	window.addEventListener("keypress", onKeyPress, false);
+	window.addEventListener("keydown", onKeyDown, false);
+
+	$("#canvas").hide();
+	$("#input-word").bind("change paste keyup", validateInput);
 }
 
 function draw() {
@@ -79,6 +88,8 @@ function drawState(ctx, state) {
 }
 
 function drawStateID(ctx, state) {
+	setFillingSymbol(ctx, null);
+
 	ctx.font = "15px Georgia";
 	ctx.textAlign = "center";
 	ctx.textBaseline = "middle";
@@ -89,6 +100,8 @@ function drawStateID(ctx, state) {
 }
 
 function setStateColor(ctx, state) {
+	setFillingSymbol(ctx, null);
+
 	if (runInfo.nowRunning && runInfo.stateID == state.id) {
 		ctx.fillStyle = "rgb(108, 182, 196)";
 		return;
@@ -108,6 +121,8 @@ function setStateColor(ctx, state) {
 }
 
 function setStateStroke(ctx, state) {
+	setFillingSymbol(ctx, null);
+
 	ctx.lineWidth = 2;
 	
 	if (runInfo.nowRunning && runInfo.stateID == state.id) {
@@ -119,6 +134,8 @@ function setStateStroke(ctx, state) {
 }
 
 function drawTransition(ctx, tr) {
+	setFillingSymbol(ctx, tr);
+
 	setTransitionColor(ctx, tr);
 
 	if (tr.state_src.id == tr.state_dst.id) {
@@ -130,6 +147,8 @@ function drawTransition(ctx, tr) {
 }
 
 function setTransitionColor(ctx, tr) {
+	setFillingSymbol(ctx, tr);
+
 	if (runInfo.nowRunning && runInfo.transitionID == tr.id) {
 		ctx.strokeStyle = ctx.fillStyle = "rgb(42, 114, 157)";
 		return;
@@ -141,6 +160,20 @@ function setTransitionColor(ctx, tr) {
 	}
 	else {
 		ctx.strokeStyle = ctx.fillStyle = "rgb(0, 0, 0)";
+	}
+}
+
+function setFillingSymbol(ctx, tr) {
+	if (selectedTransition.id != -1) {
+		if (tr != null && tr.id == selectedTransition.id) {
+			ctx.globalAlpha = 1;
+		}
+		else {
+			ctx.globalAlpha = 0.3;
+		}
+	}
+	else {
+		ctx.globalAlpha = 1;
 	}
 }
 
@@ -261,7 +294,7 @@ function drawTransitionCircle(ctx, tr) {
 	ctx.font = "20px Georgia";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	ctx.fillText(tr.symbol,
+	ctx.fillText(tr.symbols,
 		center.x - radius * 2,
 		center.y - radius / 2);
 }
@@ -337,7 +370,7 @@ function drawTransitionOver(ctx, tr) {
 	ctx.font = "20px Georgia";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	ctx.fillText(tr.symbol,
+	ctx.fillText(tr.symbols,
 		arrow_pt.x,
 		arrow_pt.y);
 }

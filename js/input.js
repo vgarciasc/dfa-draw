@@ -33,6 +33,14 @@ function onMouseDown(e) {
 	else {
 		resetSelectedState();
 	}
+
+	updateHoveredTransition();
+	if (hoveredTransition != null) {
+		selectedTransition.id = hoveredTransition.id;
+	}
+	else {
+		selectedTransition.id = -1;
+	}
 }
 
 function onMouseUp(e) {
@@ -40,12 +48,18 @@ function onMouseUp(e) {
 }
 
 function onKeyPress(e) {
-	if (nowFillingSymbol) {
-		var symbol = String.fromCharCode(e.keyCode);
-		if (alphabet.indexOf(symbol) != -1) {
-			nowFillingSymbol = false;
-			setTransitionSymbol(String.fromCharCode(e.keyCode));
+	if (selectedTransition.id != -1) {
+		if (e.keyCode == 13) { //enter
+			nowFillingSymbol.now = false;
+			if (getSymbolsTransition(selectedTransition.id).length == 0) {
+				removeTransition(selectedTransition.id);
+			}
+			selectedTransition.id = -1;
+			return;
 		}
+
+		var symbol = String.fromCharCode(e.keyCode);
+		addTransitionSymbol(symbol);
 	}
 
 	switch (e.keyCode) {
@@ -61,6 +75,22 @@ function onKeyPress(e) {
 		case 115:
 			setInitialState();
 			break;
+	}
+}
+
+function onKeyDown(e) {
+	if (selectedTransition.id != -1) {
+		//backspace
+		if (e.keyCode == 8) {
+			removeLastSymbol();
+			return;
+		}
+
+		//delete
+		if (e.keyCode == 46) {
+			removeTransition(selectedTransition.id);
+			return;
+		}
 	}
 }
 
@@ -97,5 +127,5 @@ function updateHoveredTransition() {
 		}
 	}
 
-	hoveredTransition = -1;
+	hoveredTransition = null;
 }

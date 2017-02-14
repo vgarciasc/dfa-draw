@@ -6,15 +6,15 @@ var alphabet = [];
 var tempSrc = null;
 var tempDst = null;
 var tempSymbol = null;
-var nowFillingSymbol = false;
+var nowFillingSymbol = {now: false};
 
 var hoveredTransition = null;
 
-function transition(id, state_src, state_dst, symbol) {
+function transition(id, state_src, state_dst, symbols) {
 	this.id = id;
 	this.state_src = state_src;
 	this.state_dst = state_dst;
-	this.symbol = symbol;
+	this.symbols = symbols;
 	
 	state_src.transitionsOut[state_src.transitionsOut.length] = this;
 	state_dst.transitionsIn[state_dst.transitionsIn.length] = this;
@@ -37,18 +37,22 @@ function createTransition() {
 		if (!state) {
 			return;
 		}
+		var trID = getTransitionBetweenStates(tempSrc.id, state.id);
+		if (trID != -1) {
+			selectedTransition.id = trID;
+		}
+		else {
+			var aux = new transition(transitionList.length, tempSrc, state, []);
+			nowFillingSymbol.now = true;
+			addTransition(aux);
+			selectedTransition.id = aux.id;
+		}
+
 		inTransition = false;
-		var aux = new transition(transitionList.length, tempSrc, state, "_");
-		nowFillingSymbol = true;
-		addTransition(aux);
 		tempSrc = null;
 		selectedState.adding_transition = false;
 		resetSelectedState();
 	}
-}
-
-function setTransitionSymbol(sym) {
-	transitionList[transitionList.length - 1].symbol = sym;
 }
 
 function addTransition(transition) {
@@ -120,4 +124,70 @@ function stateContainsTransitionOut(stateID, trID) {
 	}
 
 	return false;
+}
+
+function removeLastSymbol() {
+	if (selectedTransition.id == -1) {
+		return;
+	}
+
+	var tr = transitionList[selectedTransition.id];
+
+	tr.symbols.pop();
+}
+
+function addTransitionSymbol(sym) {
+	if (selectedTransition.id == -1) {
+		return;
+	}
+
+	var tr = transitionList[selectedTransition.id];
+
+	for (var i = 0; i < tr.state_src.transitionsOut.length; i++) {
+		var aux = tr.state_src.transitionsOut[i];
+		if (aux.symbols.indexOf(sym) != -1) {
+			return;
+		}
+	}
+
+	if (alphabet.indexOf(sym) != -1 && tr.symbols.indexOf(sym) == -1) {
+		tr.symbols.push(sym);
+	} 
+}
+
+function removeTransition(trID) {
+	var tr = getTransitionByID(trID);
+	var index = transitionList.indexOf(tr);
+
+	transitionList.splice(index, 1);
+
+	for (var i = index; i < transitionList.length; i++) {
+		transitionList[i].id -= 1;
+	}
+
+	if (selectedTransition.id == trID) {
+		selectedTransition.id = -1;
+	}
+
+	setJson(getJson());
+}
+
+function getSymbolsTransition(trID) {
+	if (trID == -1) {
+		return null;
+	}
+
+	return getTransitionByID(trID).symbols;
+}
+
+function getTransitionBetweenStates(fromID, toID) {
+	var from = getStateByID(fromID);
+
+	for (var i = 0; i < from.transitionsOut.length; i++) {
+		if (from.transitionsOut[i].state_dst.id == toID) {
+			return from.transitionsOut[i].id;
+		}
+	}
+
+	return -1;
 }

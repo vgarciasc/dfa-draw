@@ -14,14 +14,20 @@
 </head>
 <body>
 	<input type="text" id="alphabet"> <input type="submit" class="button" value="set alphabet" onclick="setAlphabet()"><br>
-	<input type="text" id="input-word"> <input type="submit" class="button" value="run" onclick="run()"><br>
 	<input type="text" id="json-area">
 	<input type="submit" class="button" value="Download JSON" onclick="exportJson()">
 	<input type="submit" class="button" value="Upload JSON" onclick="importJson()"><br>
+	<div id="canvas">
+	<br>
+	<input type="text" id="input-word"> <input id="run-button" type="submit" class="button" value="run" onclick="run()"><br>
 	<canvas id="main-canvas" width="400" height="400"></canvas>
-	<div id="results">
-	<b>results:</b><br>
+	</div>
+	<div id="error">
+
 	</div>
 	<br>
+
+	<div id="results">
+	</div>
 </body>
 </html>

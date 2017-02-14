@@ -8,21 +8,25 @@ function Serialized_state(id, coord, radius, end, start) {
 	this.start = start;
 }
 
-function Serialized_transition(id, state_src_id, state_dst_id, symbol) {
+function Serialized_transition(id, state_src_id, state_dst_id, symbols) {
 	this.id = id;
 	this.state_src_id = state_src_id;
 	this.state_dst_id = state_dst_id;
-	this.symbol = symbol;
+	this.symbols = symbols;
 }
 
 function importJson() {
 	var json = document.getElementById("json-area").value;
+	setJson(json);
+}
 
+function setJson(json) {
 	if (json != "") {
 		json = JSON.parse(json);
-		stateList = json.states;
 		document.getElementById("alphabet").value = json.alphabet;
 		setAlphabet();
+
+		stateList = json.states;
 
 		transitionList = [];
 
@@ -37,7 +41,7 @@ function importJson() {
 			var tr = new transition(json.transitions[i].id,
 				state_src,
 				state_dst,
-				json.transitions[i].symbol);
+				json.transitions[i].symbols);
 
 			transitionList.push(tr);
 			if (!stateContainsTransition(state_src.id, tr.id)) {
@@ -50,7 +54,7 @@ function importJson() {
 	}
 }
 
-function exportJson() {
+function getJson() {
 	var json_states = [];
 	var json_transitions = [];
 
@@ -68,9 +72,13 @@ function exportJson() {
 		json_transitions.push(new Serialized_transition(transition.id,
 			transition.state_src.id,
 			transition.state_dst.id,
-			transition.symbol));
+			transition.symbols));
 	}
 
 	var json = {alphabet: alphabet, states: json_states, transitions: json_transitions};
-	document.getElementById("json-area").value = JSON.stringify(json);
+	return JSON.stringify(json);;
+}
+
+function exportJson() {
+	document.getElementById("json-area").value = getJson();
 }
