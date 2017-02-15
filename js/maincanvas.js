@@ -292,10 +292,10 @@ function drawTransitionCircle(ctx, tr) {
 
 	//symbol
 	ctx.font = "20px Georgia";
-	ctx.textAlign = "left";
+	ctx.textAlign = "right";
 	ctx.textBaseline = "top";
 	ctx.fillText(tr.symbols,
-		center.x - radius * 2,
+		center.x - radius - 2,
 		center.y - radius / 2);
 }
 
@@ -319,8 +319,11 @@ function drawTransitionOver(ctx, tr) {
 	vector2_dir = normalizeVector(vector2_dir);
 	vector2_dir = multiplyVector(vector2_dir, 20);
 
-	var middle_pt = new coord(src.x + (dst.x - src.x)/2,
-		src.y + (dst.y - src.y)/2);
+	var middle_pt1 = new coord(src.x + (dst.x - src.x)/3,
+		src.y + (dst.y - src.y)/3);
+
+	var middle_pt2 = new coord(src.x + 2*(dst.x - src.x)/3,
+		src.y + 2*(dst.y - src.y)/3);
 
 	var vector2_ort = new coord(src.y - dst.y,
 		dst.x - src.x);
@@ -330,15 +333,24 @@ function drawTransitionOver(ctx, tr) {
 	var arrow_pt = new coord(dst.x - (vector2_dir.x * 2) + vector2_ort.x * 2,
 		dst.y - (vector2_dir.y * 2) + vector2_ort.y);
 
-	var quadPoint = new coord(middle_pt.x + vector2_ort.x * 5,
-		middle_pt.y + vector2_ort.y * 5);
+	var aux_mlt = Math.sqrt(Math.pow(dst.x - src.x, 2) + Math.pow(dst.y - src.y, 2)) / 40;
+
+	var quadPoint1 = new coord(middle_pt1.x + vector2_ort.x * aux_mlt,
+		middle_pt1.y + vector2_ort.y * aux_mlt);
+
+	var quadPoint2 = new coord(middle_pt2.x + vector2_ort.x * aux_mlt,
+		middle_pt2.y + vector2_ort.y * aux_mlt);
 
 	//line
 	ctx.moveTo(src.x, src.y);
-	ctx.quadraticCurveTo(quadPoint.x,
-		quadPoint.y,
+	ctx.bezierCurveTo(quadPoint1.x,
+		quadPoint1.y,
+		quadPoint2.x,
+		quadPoint2.y,
 		dst.x,
 		dst.y);
+
+	tr.curve = new bezcurve(src, quadPoint1, quadPoint2, dst);
 
 	ctx.lineWidth = 3;
 	ctx.stroke();
@@ -353,7 +365,7 @@ function drawTransitionOver(ctx, tr) {
 	// 	arrow_pt.y + vector2_dir.y);
 	// ctx.closePath();
 
-	var arrowAngle = Math.atan2(quadPoint.x - dst.x, quadPoint.y - dst.y) + Math.PI;
+	var arrowAngle = Math.atan2(quadPoint2.x - dst.x, quadPoint2.y - dst.y) + Math.PI;
 	var arrowWidth = 13;
 
 	ctx.moveTo(dst.x - (arrowWidth * Math.sin(arrowAngle - Math.PI / 6)), 
@@ -373,6 +385,15 @@ function drawTransitionOver(ctx, tr) {
 	ctx.fillText(tr.symbols,
 		arrow_pt.x,
 		arrow_pt.y);
+}
+
+function bezcurve(start, coord1, coord2, end) {
+	var curve = [];
+	curve.push(start);
+	curve.push(coord1);
+	curve.push(coord2);
+	curve.push(end);
+	this.curve = curve;
 }
 
 function clamp(num, min, max) {

@@ -39,7 +39,7 @@ function onMouseDown(e) {
 		selectedTransition.id = hoveredTransition.id;
 	}
 	else {
-		selectedTransition.id = -1;
+		resetSelectedTransition();
 	}
 }
 

@@ -64,25 +64,31 @@ function mouseOverTransition(tr) {
 		var distance = Math.sqrt(Math.pow(mousePos.x - tr.state_src.coord.x + tr.state_src.radius, 2) +
 			Math.pow(mousePos.y - tr.state_src.coord.y + tr.state_src.radius, 2));
 		distance = Math.abs(distance - tr.state_src.radius);
-		if (distance < 15) {
+		if (distance < 8) {
 			return true;
 		}
 
 		return false;
 	}
 
-	var x1 = tr.state_src.coord.x;
-	var x2 = tr.state_dst.coord.x;
-	var y1 = tr.state_src.coord.y;
-	var y2 = tr.state_dst.coord.y;
+	// var x1 = tr.state_src.coord.x;
+	// var x2 = tr.state_dst.coord.x;
+	// var y1 = tr.state_src.coord.y;
+	// var y2 = tr.state_dst.coord.y;
 
-	var x0 = mousePos.x;
-	var y0 = mousePos.y;
+	// var x0 = mousePos.x;
+	// var y0 = mousePos.y;
 
-	var distance = Math.abs((y2 - y1)*x0 - (x2 - x1)*y0 + x2*y1 - y2*x1);
-	distance /= Math.sqrt(Math.pow(y2 - y1, 2) + Math.pow(x2 - x1, 2));
+	// var distance = Math.abs((y2 - y1)*x0 - (x2 - x1)*y0 + x2*y1 - y2*x1);
+	// distance /= Math.sqrt(Math.pow(y2 - y1, 2) + Math.pow(x2 - x1, 2));
 
-	if (distance < 10) {
+	if (tr.curve == null) {
+		return false;
+	}
+
+	var distance = jsBezier.distanceFromCurve(mousePos, tr.curve.curve);
+
+	if (distance.distance < 7) {
 		return true;
 	}
 
@@ -190,4 +196,15 @@ function getTransitionBetweenStates(fromID, toID) {
 	}
 
 	return -1;
+}
+
+function resetSelectedTransition() {
+	if (selectedTransition.id != -1) {
+		var tr = getTransitionByID(selectedTransition.id);
+		if (getSymbolsTransition(tr.id).length == 0) {
+			removeTransition(tr.id);
+		}
+	}
+
+	selectedTransition.id = -1;
 }
