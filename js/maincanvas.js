@@ -291,7 +291,7 @@ function drawTransitionCircle(ctx, tr) {
 	ctx.fill();
 
 	//symbol
-	ctx.font = "20px Georgia";
+	ctx.font = "15px Georgia";
 	ctx.textAlign = "right";
 	ctx.textBaseline = "top";
 	ctx.fillText(tr.symbols,
@@ -378,13 +378,36 @@ function drawTransitionOver(ctx, tr) {
 
 	ctx.fill();
 
+	var text_pos = new coord(0, 0);
+	text_pos = new coord(src.x + (dst.x - src.x)/2 + vector2_ort.x * aux_mlt,
+		src.y + (dst.y - src.y)/2 + vector2_ort.y * aux_mlt);
+
+	if (Math.abs(src.y - dst.y) < 40) {
+		if (src.x < dst.x) {
+			ctx.textAlign = "middle";
+			ctx.textBaseline = "top";
+		}
+		else {
+			ctx.textAlign = "middle";
+			ctx.textBaseline = "bottom";
+		}
+	}
+	else {
+		if (src.y < dst.y) {
+			ctx.textAlign = "right";
+			ctx.textBaseline = "middle";
+		}
+		else {
+			ctx.textAlign = "left";
+			ctx.textBaseline = "middle";
+		}
+	}
+
 	//symbol
-	ctx.font = "20px Georgia";
-	ctx.textAlign = "left";
-	ctx.textBaseline = "top";
+	ctx.font = "15px Georgia";
 	ctx.fillText(tr.symbols,
-		arrow_pt.x,
-		arrow_pt.y);
+		text_pos.x,
+		text_pos.y);
 }
 
 function bezcurve(start, coord1, coord2, end) {
