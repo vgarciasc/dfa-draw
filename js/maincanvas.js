@@ -384,11 +384,11 @@ function drawTransitionOver(ctx, tr) {
 
 	if (Math.abs(src.y - dst.y) < 40) {
 		if (src.x < dst.x) {
-			ctx.textAlign = "middle";
+			ctx.textAlign = "center";
 			ctx.textBaseline = "top";
 		}
 		else {
-			ctx.textAlign = "middle";
+			ctx.textAlign = "center";
 			ctx.textBaseline = "bottom";
 		}
 	}
