@@ -159,3 +159,13 @@ function typeStateName(symbol) {
 		state.name = state.name.concat(symbol);
 	}
 }
+
+function isThereFinalState() {
+	for (var i = 0; i < stateList.length; i++) {
+		if (stateList[i].end) {
+			return true;
+		}
+	}
+
+	return false;
+}

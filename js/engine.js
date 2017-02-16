@@ -67,7 +67,8 @@ function runAnimation(queue) {
 
 	setTimeout(function() {
 		runInfo.nowRunning = false;
-		logResult(getStateByID(queue[queue.length - 1].stateID).end);
+		logResult(getStateByID(queue[queue.length - 1].stateID).name, 
+			getStateByID(queue[queue.length - 1].stateID).end);
 	}, timeSkipAmount * timeSkipCount++);
 }
 
@@ -107,12 +108,19 @@ function setAlphabet() {
 	aux.replace(" ", "");
 	aux.replace(",", "");
 
+	if (aux.length == 0) {
+		return;
+	}
+
 	alphabet = [];
 	while (aux != "") {
 		var symbol = aux[0];
 
-		if (symbol != "," && symbol != " " &&
-			alphabet.indexOf(symbol) == -1) {
+		if (alphabet.indexOf(symbol) != -1) {
+			return;
+		}
+
+		if (symbol != "," && symbol != " ") {
 			alphabet[alphabet.length] = symbol;
 		}
 
@@ -137,18 +145,18 @@ function logError(type, msg) {
 
 var firstResult = true;
 
-function logResult(accept) {
+function logResult(final_state_name, accept) {
 	if (firstResult) {
 		firstResult = false;
-		$("#results").html("<b>RESULTS:</b><br>");
+		$("#results").html("<br><b>RESULTS:</b><br>");
 	}
 
-	var txt = "\"" + runInfo.input + "\": ";
+	var txt = "[input: \"<b>" + runInfo.input + "</b>\", ";
 	if (accept) {
-		txt += "accepted. <br>";
+		txt += "end state: <b>" + final_state_name + "</b>] - accepted. <br><br>";
 	}
 	else {
-		txt += "rejected. <br>";
+		txt += "end state: <b>" + final_state_name + "</b>] - rejected. <br><br>";
 	}
 
 	$("#results").append(txt);
@@ -180,6 +188,11 @@ function validateInput() {
 
 	if (getInitialState() == null) {
 		logError("NO INITIAL STATE", "automata doesn't have an initial state.")
+		result = false;
+	}
+
+	if (!isThereFinalState()) {
+		logError("NO FINAL STATE", "automata doesn't have a final state.")
 		result = false;
 	}
 

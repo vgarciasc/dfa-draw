@@ -4,7 +4,12 @@ function onMouseMove(e) {
 	mousePos = getCursorPosition(e);
 	var state = getSelectedState();
 
-	updateHoveredTransition();
+	if (getHoverState() == null) {
+		updateHoveredTransition();
+	}
+	else {
+		hoveredTransition = null;
+	}
 
 	if (runInfo.nowRunning) {
 		return;
@@ -18,23 +23,26 @@ function onMouseMove(e) {
 function onMouseDown(e) {
 	var state = getHoverState();
 
-	if (runInfo.nowRunning) {
+	if (runInfo.nowRunning || selectedState.naming) {
 		return;
 	}
 
 	if (state) {
 		if (state != getSelectedState()) {
 			selectState(state);
+			resetSelectedTransition();
+			hoveredTransition = null;
+			return;
 		}
 		else {
 			resetSelectedState();
+			return;
 		}
 	}
 	else {
 		resetSelectedState();
 	}
 
-	updateHoveredTransition();
 	if (hoveredTransition != null) {
 		selectedTransition.id = hoveredTransition.id;
 	}

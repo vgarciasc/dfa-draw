@@ -60,6 +60,11 @@ function start() {
 function draw() {
 	cleanCanvas();
 
+	context.globalAlpha = 0.2;
+	context.fillStyle = "white";
+	context.fillRect(0, 0, canvas.width, canvas.height);
+	context.globalAlpha = 1;
+
 	for (var i = 0; i < transitionList.length; i++) {
 		drawTransition(context, transitionList[i]);
 	}
@@ -510,6 +515,8 @@ function drawTempTransition(ctx) {
 	if (state == null) {
 		return;
 	}
+
+	ctx.strokeStyle = ctx.fillStyle = tr_idle_color;
 
 	var src = new coord(state.coord.x, state.coord.y);
 	var dst = new coord(mousePos.x, mousePos.y);

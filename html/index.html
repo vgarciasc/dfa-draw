@@ -14,15 +14,32 @@
 	<link rel="icon" href="../html/favicon.png">
 </head>
 <body>
-	<input type="text" id="alphabet"> <input type="submit" class="button" value="set alphabet" onclick="setAlphabet()"><br>
+<div id = "wrapper">
+	<div id="c1">
+	<input type="text" id="alphabet"> <input type="submit" class="button" value="Set Alphabet" onclick="setAlphabet()">  (e.g.: "1, 0")<br> 
 	<input type="text" id="json-area">
 	<input type="submit" class="button" value="Download JSON" onclick="exportJson()">
 	<input type="submit" class="button" value="Upload JSON" onclick="importJson()"><br>
-	<div id="canvas">
+	<div id="instructions">
 	<br>
-	<input type="text" id="input-word"> <input id="run-button" type="submit" class="button" value="run" onclick="run()"><br>
-	<canvas id="main-canvas" width="400" height="400"></canvas>
+	<b>CREATE STATE (Q key):</b> create a state on the mouse position.<br>
+	<b>SELECT TRANSITION / STATE:</b> left-click on a state or transition.<br>
+	<b>MOVE STATE:</b> hold left-click on a state and move the cursor.<br>
+	<b>CREATE TRANSITION (E key):</b> once a state is selected, press E and select another state.<br>
+	<b>REMOVE TRANSITION / STATE (DEL key):</b> once a state or transition is selected, press DEL to remove it.<br>
+	<b>RENAME STATE (R key):</b> once a state is selected, press R to enter the renaming mode. In the renaming mode, press ENTER to set the state name.<br>
+	<b>SET FINAL STATE (F key):</b> once a state is selected, press F to set it as a final state.<br>
+	<b>SET INITIAL STATE (S key):</b> once a state is selected, press S to set it as the start state.<br>
 	</div>
+	</div>
+	<div id = "c2">
+		<div id="canvas">
+		<br>
+		<input type="text" id="input-word"> <input id="run-button" type="submit" class="button" value="Run" onclick="run()"><br><br>
+		<canvas id="main-canvas" width="600" height="600"></canvas>
+		</div>
+	</div>
+	<div id = "c3">
 	<div id="error">
 
 	</div>
@@ -30,15 +47,7 @@
 
 	<div id="results">
 	</div>
-
-	<br>
-	<div id="instructions">
-	<b>CREATE STATE (Q key):</b> create a state on the mouse position.<br>
-	<b>SELECT STATE:</b> left-click on a state.<br>
-	<b>MOVE STATE:</b> hold left-click on a state and move the cursor.<br>
-	<b>CREATE TRANSITION (E key):</b> once a state is selected, press E and select another state.<br>
-	<b>SELECT TRANSITION:</b> left-click on a transition.<br>
-	<b>REMOVE TRANSITION (DEL key):</b> once a transition is selected, press DEL to remove it.<br>
+	</div>
 	</div>
 </body>
 </html>
