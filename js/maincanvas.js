@@ -53,6 +53,8 @@ function start() {
 
 	$("#canvas").hide();
 	$("#input-word").bind("change paste keyup", validateInput);
+
+	context.lineWidth = 3;
 }
 
 function draw() {
@@ -437,7 +439,6 @@ function drawTransitionOver(ctx, tr) {
 
 	tr.curve = new bezcurve(src, quadPoint1, quadPoint2, dst);
 
-	ctx.lineWidth = 3;
 	ctx.stroke();
 
 	//arrow
@@ -587,7 +588,6 @@ function drawTempTransition(ctx) {
 		}
 	}
 
-	ctx.lineWidth = 3;
 	ctx.stroke();
 
 	ctx.beginPath();
