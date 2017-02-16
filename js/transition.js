@@ -61,8 +61,26 @@ function addTransition(transition) {
 
 function mouseOverTransition(tr) {
 	if (tr.state_src.id == tr.state_dst.id) {
-		var distance = Math.sqrt(Math.pow(mousePos.x - tr.state_src.coord.x + tr.state_src.radius, 2) +
-			Math.pow(mousePos.y - tr.state_src.coord.y + tr.state_src.radius, 2));
+		var offset = new coord(tr.state_src.radius, tr.state_src.radius);
+
+		switch (tr.cyclealignment) {
+			case "topleft": default:
+				break;
+			case "topright":
+				offset.x *= -1;
+				break;
+			case "bottomleft":
+				offset.y *= -1;
+				break;
+			case "bottomright":
+				offset.y *= -1;
+				offset.x *= -1;
+				break;
+		}
+
+
+		var distance = Math.sqrt(Math.pow(mousePos.x - tr.state_src.coord.x + offset.x, 2) +
+			Math.pow(mousePos.y - tr.state_src.coord.y + offset.y, 2));
 		distance = Math.abs(distance - tr.state_src.radius);
 		if (distance < 8) {
 			return true;
@@ -163,12 +181,16 @@ function addTransitionSymbol(sym) {
 
 function removeTransition(trID) {
 	var tr = getTransitionByID(trID);
+	if (tr == null) {
+		return;
+	}
+
 	var index = transitionList.indexOf(tr);
 
 	transitionList.splice(index, 1);
 
 	for (var i = index; i < transitionList.length; i++) {
-		transitionList[i].id -= 1;
+		transitionList[i].id = i;
 	}
 
 	if (selectedTransition.id == trID) {

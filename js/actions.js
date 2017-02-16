@@ -5,8 +5,9 @@ function coord(x, y) {
 	this.y = y;
 }
 
-function state(id, coord, radius, end, start, transitionsIn, transitionsOut) {
+function state(id, name, coord, radius, end, start, transitionsIn, transitionsOut) {
 	this.id = id;
+	this.name = name;
 	this.coord = coord;
 	this.radius = radius;
 	this.end = end;
@@ -17,6 +18,7 @@ function state(id, coord, radius, end, start, transitionsIn, transitionsOut) {
 
 function createState() {
 	stateList[stateList.length] = new state(stateList.length,
+		stateList.length.toString(),
 		new coord(mousePos.x, mousePos.y),
 		20,
 		false,
@@ -39,6 +41,7 @@ function selectState(state) {
 function resetSelectedState() {
 	selectedState.id = -1;
 	selectedState.selecting = false;
+	selectedState.naming = false;
 }
 
 function isSelected(state) {
@@ -114,4 +117,45 @@ function getStateByID(id) {
 	}
 
 	return null;
+}
+
+function removeState(stateID) {
+	if (stateID == -1) {
+		return;
+	}
+
+	var state = getStateByID(stateID);
+
+	for (var i = 0; i < state.transitionsOut.length; i++) {
+		removeTransition(state.transitionsOut[i].id);
+	}
+
+	for (var i = 0; i < state.transitionsIn.length; i++) {
+		removeTransition(state.transitionsIn[i].id);
+	}
+
+	var index = 0;
+	stateList.splice(stateID, 1);
+	for (var i = stateID; i < stateList.length; i++) {
+		stateList[i].id = i;
+	}
+}
+
+function typeStateName(symbol) {
+	var state = getStateByID(selectedState.id);
+
+	if (state == null) {
+		return;
+	}
+
+	if (symbol == "backspace") {
+		if (state.name.length > 0) {
+			state.name = state.name.slice(0, state.name.length - 1);
+		}
+		return;
+	}
+	
+	if (state.name.length < 4) {
+		state.name = state.name.concat(symbol);
+	}
 }

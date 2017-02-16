@@ -60,6 +60,22 @@ function onKeyPress(e) {
 
 		var symbol = String.fromCharCode(e.keyCode);
 		addTransitionSymbol(symbol);
+		return;
+	}
+
+	if (selectedState.id != -1 && selectedState.naming) {
+		if (e.keyCode == 13) { //enter
+			if (getStateByID(selectedState.id).name.length == 0) {
+				return; //dont let the user name a state null
+			}
+			selectedState.naming = false;
+			resetSelectedState();
+			return;
+		}
+
+		var symbol = String.fromCharCode(e.keyCode);
+		typeStateName(symbol);
+		return;
 	}
 
 	switch (e.keyCode) {
@@ -75,6 +91,9 @@ function onKeyPress(e) {
 		case 115:
 			setInitialState();
 			break;
+		case 114:
+			nameState();
+			break;
 	}
 }
 
@@ -89,6 +108,19 @@ function onKeyDown(e) {
 		//delete
 		if (e.keyCode == 46) {
 			removeTransition(selectedTransition.id);
+			return;
+		}
+	}
+
+	if (selectedState.id != -1) {
+		//delete
+		if (e.keyCode == 46) {
+			removeState(selectedState.id);
+			return;
+		}
+
+		if (e.keyCode == 8 && selectedState.naming) {
+			typeStateName("backspace");
 			return;
 		}
 	}
@@ -128,4 +160,17 @@ function updateHoveredTransition() {
 	}
 
 	hoveredTransition = null;
+}
+
+function isHoveredState(state) {
+	if (Math.sqrt(Math.pow(mousePos.x - state.coord.x, 2) +
+		Math.pow(mousePos.y - state.coord.y, 2)) < state.radius) {
+		return true;
+	}
+
+	return false;
+}
+
+function nameState() {
+	selectedState.naming = true;
 }

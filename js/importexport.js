@@ -1,7 +1,8 @@
 var jsonArea = document.getElementById("json-area");
 
-function Serialized_state(id, coord, radius, end, start) {
+function Serialized_state(id, name, coord, radius, end, start) {
 	this.id = id;
+	this.name = name;
 	this.coord = coord;
 	this.radius = radius;
 	this.end = end;
@@ -61,6 +62,7 @@ function getJson() {
 	for (var i = 0; i < stateList.length; i++) {
 		var state = stateList[i];
 		json_states.push(new Serialized_state(state.id,
+			state.name,
 			state.coord,
 			state.radius,
 			state.end,
