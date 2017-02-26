@@ -56,8 +56,9 @@ function onMouseUp(e) {
 }
 
 function onKeyPress(e) {
+	var key = e.keyCode || e.which || 0;
 	if (selectedTransition.id != -1) {
-		if (e.keyCode == 13) { //enter
+		if (key == 13) { //enter
 			nowFillingSymbol.now = false;
 			if (getSymbolsTransition(selectedTransition.id).length == 0) {
 				removeTransition(selectedTransition.id);
@@ -66,13 +67,13 @@ function onKeyPress(e) {
 			return;
 		}
 
-		var symbol = String.fromCharCode(e.keyCode);
+		var symbol = String.fromCharCode(key);
 		addTransitionSymbol(symbol);
 		return;
 	}
 
 	if (selectedState.id != -1 && selectedState.naming) {
-		if (e.keyCode == 13) { //enter
+		if (key == 13) { //enter
 			if (getStateByID(selectedState.id).name.length == 0) {
 				return; //dont let the user name a state null
 			}
@@ -81,12 +82,12 @@ function onKeyPress(e) {
 			return;
 		}
 
-		var symbol = String.fromCharCode(e.keyCode);
+		var symbol = String.fromCharCode(key);
 		typeStateName(symbol);
 		return;
 	}
 
-	switch (e.keyCode) {
+	switch (key) {
 		case 113:
 			createState();
 			break;
@@ -106,15 +107,16 @@ function onKeyPress(e) {
 }
 
 function onKeyDown(e) {
+	var key = e.keyCode || e.which || 0;
 	if (selectedTransition.id != -1) {
 		//backspace
-		if (e.keyCode == 8) {
+		if (key == 8) {
 			removeLastSymbol();
 			return;
 		}
 
 		//delete
-		if (e.keyCode == 46) {
+		if (key == 46) {
 			removeTransition(selectedTransition.id);
 			return;
 		}
@@ -122,12 +124,12 @@ function onKeyDown(e) {
 
 	if (selectedState.id != -1) {
 		//delete
-		if (e.keyCode == 46) {
+		if (key == 46) {
 			removeState(selectedState.id);
 			return;
 		}
 
-		if (e.keyCode == 8 && selectedState.naming) {
+		if (key == 8 && selectedState.naming) {
 			typeStateName("backspace");
 			return;
 		}
