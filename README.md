@@ -1,6 +1,6 @@
 [Now on GitHub Pages!](https://vgarciasc.github.io/dfa-draw/html/index.html)
 
-# autonoma-simulator
+# dfa-draw
 > A simple JS web application where you can create and run DFAs (deterministic finite automata).
 
 ## How to
