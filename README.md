@@ -1,7 +1,7 @@
-[Now on GitHub Pages!](https://vgarciasc.github.io/autonoma-simulator/html/index.html)
+[Now on GitHub Pages!](https://vgarciasc.github.io/dfa-draw/html/index.html)
 
 # autonoma-simulator
-> A simple JS web application to create deterministic finite automata.
+> A simple JS web application where you can create and run DFAs (deterministic finite automata).
 
 ## How to
 - Start by adding an alphabet (such as {1, 0}).
